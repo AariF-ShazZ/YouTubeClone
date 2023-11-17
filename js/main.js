@@ -95,7 +95,6 @@ const getChannelIcon = async (video_Data) => {
     } catch (error) {
         console.log(error);
     }
-
 }
 
 async function getChannel(video) {
