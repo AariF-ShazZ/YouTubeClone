@@ -55,29 +55,17 @@ const channel_http = "https://www.googleapis.com/youtube/v3/channels?";
 
 const getYoutubeData = async () => {
     try {
-        // let data
-        // if(!query){
-            const response = await fetch(video_url + new URLSearchParams({
-                key: api_key,
-                part: 'snippet, statistics, contentDetails',
-                chart: 'mostPopular',
-                maxResults: 50,
-                regionCode: 'TR'
-            }));
-        //     data = await response.json();
-        // }else {
-            // const response = await fetch(search_url + new URLSearchParams({
-            //     key: api_key,
-            //     part: 'snippet, statistics, contentDetails',
-            //     chart: 'mostPopular',
-            //     maxResults: 50,
-            //     q: query, // Include the 'q' parameter for search query
-            //     regionCode: 'TR'
-            // }));
-        //     data = await response.json();
-        // }
+      
+        const response = await fetch(video_url + new URLSearchParams({
+            key: api_key,
+            part: 'snippet, statistics, contentDetails',
+            chart: 'mostPopular',
+            maxResults: 50,
+            regionCode: 'TR'
+        }));
+      
 
-        const  data = await response.json();
+        const data = await response.json();
         console.log("getYoutubeData =>", data);
         if (data && data.items) {
             const promises = data.items.map(async (item) => {
@@ -124,64 +112,57 @@ async function getChannel(video) {
     video.channelThumbnail = data.items[0].snippet.thumbnails.high.url
     return video
 }
-
 const appendData = (videoData) => {
-    // console.log("videoData =>", videoData);
-    var container = document.querySelector(".right-sidebar")
-    container.innerHTML = null
+    var container = document.querySelector(".right-sidebar");
+    container.innerHTML = null;
+
     videoData.forEach((data) => {
-        // Create main container div
         const sideVideoListDiv = document.createElement('div');
         sideVideoListDiv.setAttribute('class', 'side-video-list');
-    
-        // Create thumbnail link
+
         const thumbnailLink = document.createElement('a');
-        thumbnailLink.setAttribute('href', ''); // Replace with the appropriate URL
+        thumbnailLink.setAttribute('href', ''); 
         thumbnailLink.setAttribute('class', 'small-thumbnail');
-    
-        // Create thumbnail image
+
         const thumbnailImg = document.createElement('img');
-        thumbnailImg.setAttribute('src',data.snippet.thumbnails.high.url); // Replace with data.snippet.thumbnails.high.url
+        thumbnailImg.setAttribute('src', data.snippet.thumbnails.high.url); 
         thumbnailImg.setAttribute('alt', '');
-    
         thumbnailLink.appendChild(thumbnailImg);
-    
-        // Create vid-info container
+
         const vidInfoDiv = document.createElement('div');
-        vidInfoDiv.setAttribute("class",'vid-info');
-        vidInfoDiv.style.cursor = "pointer"
-    
-        // Create title link
+        vidInfoDiv.setAttribute("class", 'vid-info');
+        vidInfoDiv.style.cursor = "pointer";
+
         const titleLink = document.createElement('a');
-        titleLink.setAttribute('href', ''); // Replace with the appropriate URL
-        titleLink.textContent = 'Best app to learn new things and increase the knowledge'; // Replace with data.snippet.title
-    
-        // Create channel name paragraph
+        titleLink.setAttribute('href', ''); 
+        titleLink.textContent = 'Best app to learn new things and increase the knowledge';
+
         const channelNamePara = document.createElement('p');
-        channelNamePara.textContent = 'Tech Bro'; // Replace with data.snippet.channelTitle
-    
-        // Create views info paragraph
+        channelNamePara.textContent = 'Tech Bro';
+
         const viewsPara = document.createElement('p');
-        viewsPara.textContent = data.statistics.viewCount + "Views • 5 days"; // Replace with data.statistics.viewCount + "Views • 5 days"
-    
+        viewsPara.textContent = data.statistics.viewCount + "Views • 5 days";
+
         vidInfoDiv.appendChild(titleLink);
         vidInfoDiv.appendChild(channelNamePara);
         vidInfoDiv.appendChild(viewsPara);
-        vidInfoDiv.onclick = () => {
-            playVideo(data);
-        };
+
         sideVideoListDiv.appendChild(thumbnailLink);
         sideVideoListDiv.appendChild(vidInfoDiv);
-    
-        // Append the side video list item to the container
-       container.appendChild(sideVideoListDiv); // Replace with your container class or ID
+
+        container.appendChild(sideVideoListDiv);
+
+        // Event delegation to handle click on vid-info elements
+        vidInfoDiv.addEventListener('click', function() {
+            playVideo(data);
+        });
     });
-    
 };
 
-let playVideo = (single_Video) => {
-    console.log("ele =>", single_Video);
-    localStorage.clear()
-    // localStorage.setItem("singleVideo", JSON.stringify(single_Video))
-    // window.location.reload() 
-}
+let playVideo = (singleVideo) => {
+    console.log("video data =>", singleVideo);
+    localStorage.clear();
+    localStorage.setItem("singleVideo", JSON.stringify(singleVideo));
+    // Perform other operations here if needed
+    // For example: load the video or trigger UI changes
+};

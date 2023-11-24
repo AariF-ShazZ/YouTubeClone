@@ -49,18 +49,7 @@ const getYoutubeData = async (query) => {
                 maxResults: 50,
                 regionCode: 'TR'
             }));
-        //     data = await response.json();
-        // }else {
-            // const response = await fetch(search_url + new URLSearchParams({
-            //     key: api_key,
-            //     part: 'snippet, statistics, contentDetails',
-            //     chart: 'mostPopular',
-            //     maxResults: 50,
-            //     q: query, // Include the 'q' parameter for search query
-            //     regionCode: 'TR'
-            // }));
-        //     data = await response.json();
-        // }
+      
 
         const  data = await response.json();
         console.log("getYoutubeData =>", data);
