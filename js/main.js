@@ -159,5 +159,5 @@ const appendData = (videoData) => {
 let playVideo = (single_Video) => {
     // console.log("ele =>", single_Video);
     localStorage.setItem("singleVideo", JSON.stringify(single_Video))
-    window.location.href = "./video.html";
+    window.location.href = "../pages/video.html";
 }
